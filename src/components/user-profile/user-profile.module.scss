@@ -1,0 +1,13 @@
+.userProfile {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	justify-content: center;
+
+	&__name {
+		width: 100%;
+		font-size: 14px;
+		line-height: 114%;
+		color: #a7a7a7;
+	}
+}
