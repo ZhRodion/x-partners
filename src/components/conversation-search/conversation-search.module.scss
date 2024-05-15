@@ -1,0 +1,27 @@
+.searchConversation {
+	width: 100%;
+	max-width: 496px;
+	position: relative;
+	display: block;
+
+	&__input {
+		width: 100%;
+		padding: 12px 16px;
+		background-color: #fff;
+		border: 1px solid #e6e6e6;
+		border-radius: 8px;
+		box-sizing: border-box;
+
+		&::placeholder {
+			font-size: 14px;
+			line-height: 114%;
+			color: #808080;
+		}
+	}
+
+	&__icon {
+		position: absolute;
+		top: 11px;
+		right: 16px;
+	}
+}
