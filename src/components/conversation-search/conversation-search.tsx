@@ -5,6 +5,7 @@ import styles from './conversation-search.module.scss'
 export default function ConversationSearch() {
 	const { searchTerm, setSearchTerm } = useSearchStore()
 	const [debouncedValue, setDebouncedValue] = useState(searchTerm)
+	const setLoading = useSearchStore(state => state.setLoading)
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -18,8 +19,12 @@ export default function ConversationSearch() {
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value
+		setLoading(true)
 		if (/^[a-zA-Z0-9]*$/.test(value)) {
 			setDebouncedValue(value)
+			setTimeout(() => {
+				setLoading(false)
+			}, 2000)
 		}
 	}
 
