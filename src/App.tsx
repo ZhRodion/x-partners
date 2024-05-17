@@ -1,11 +1,12 @@
 import './App.css'
+import Conversions from './components/conversions/conversions'
 import Layout from './components/layout/layout'
 
 function App() {
 	return (
 		<>
 			<Layout>
-				<div></div>
+				<Conversions />
 			</Layout>
 		</>
 	)

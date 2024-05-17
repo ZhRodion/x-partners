@@ -1,0 +1,12 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="48" height="48" rx="12" fill="url(#pattern0_24_1172)"/>
+<circle cx="12" cy="24" r="3" fill="#141414"/>
+<circle cx="24" cy="24" r="3" fill="#141414"/>
+<circle cx="36" cy="24" r="3" fill="#141414"/>
+<defs>
+<pattern id="pattern0_24_1172" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_24_1172"/>
+</pattern>
+<image id="image0_24_1172" width="1" height="1" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAQSURBVHgBAQUA+v8AAAAAAAAFAAFkeJU4AAAAAElFTkSuQmCC"/>
+</defs>
+</svg>
