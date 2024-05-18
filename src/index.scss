@@ -50,3 +50,21 @@ input {
 	white-space: nowrap;
 	clip-path: inset(100%);
 }
+
+.graphic {
+	.MuiChartsAxis-line {
+		stroke: #e6e6e6 !important;
+	}
+
+	.MuiChartsAxis-tick {
+		display: none;
+	}
+
+	tspan {
+		font-weight: 500 !important;
+		font-size: 12px !important;
+		line-height: 133% !important;
+		fill: #a7a7a7 !important;
+		letter-spacing: 0 !important;
+	}
+}

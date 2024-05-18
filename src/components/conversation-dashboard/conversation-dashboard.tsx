@@ -1,4 +1,3 @@
-import InfoIcon from '@mui/icons-material/Info'
 import {
 	Box,
 	IconButton,
@@ -12,23 +11,34 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import fetchingData from '../../api'
 import { useSearchStore } from '../../store/search-store'
+import { columns } from '../../utils/array'
+import { formatDate, getValue } from '../../utils/functions'
 import ConversationLoader from '../conversation-loader/conversation-loader'
 import styles from './conversation-dashboard.module.scss'
 
-const formatDate = (dateString: any) => {
-	const date = new Date(dateString)
-	const day = String(date.getDate()).padStart(2, '0')
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const year = date.getFullYear()
-	const hours = String(date.getHours()).padStart(2, '0')
-	const minutes = String(date.getMinutes()).padStart(2, '0')
-	const seconds = String(date.getSeconds()).padStart(2, '0')
-	return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`
-}
+const theme = createTheme({
+	components: {
+		MuiTooltip: {
+			styleOverrides: {
+				tooltip: {
+					backgroundColor: 'white',
+					color: 'black',
+					fontSize: '12',
+					padding: '14px',
+					boxShadow: '0 4px 20px 0 rgba(93, 67, 255, 0.12)',
+				},
+				arrow: {
+					color: 'white',
+				},
+			},
+		},
+	},
+})
 
 const renderCell = (key: string, value: any) => {
 	switch (key) {
@@ -37,11 +47,13 @@ const renderCell = (key: string, value: any) => {
 		case 'user_agent':
 			return (
 				<TableCell>
-					<Tooltip title={value}>
-						<IconButton>
-							<InfoIcon />
-						</IconButton>
-					</Tooltip>
+					<ThemeProvider theme={theme}>
+						<Tooltip title={value} arrow={true} placement='top'>
+							<IconButton>
+								<img src='./svgs/conversations/info.svg' alt='Info Icon' />
+							</IconButton>
+						</Tooltip>
+					</ThemeProvider>
 				</TableCell>
 			)
 		case 'income':
@@ -57,7 +69,7 @@ export default function ConversationDashboard() {
 	const [conversions, setConversionsArray] = useState<any[]>([])
 	const [error, setError] = useState<string | null>(null)
 	const { searchTerm } = useSearchStore()
-	const loading = useSearchStore(state => state.loading)
+	const loading = useSearchStore((state: { loading: any }) => state.loading)
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -76,33 +88,6 @@ export default function ConversationDashboard() {
 	const filteredConversions = conversions.filter(conversion =>
 		conversion.id.includes(searchTerm)
 	)
-
-	const columns = [
-		{ title: 'Дата создания', key: 'date' },
-		{ title: 'Оффер', key: 'offer' },
-		{ title: 'Гео/IP', key: 'geo.name' },
-		{ title: 'Устройство', key: 'device.os' },
-		{ title: 'Статус', key: 'status' },
-		{ title: 'Доход', key: 'income' },
-		{ title: 'Название цели', key: 'goal' },
-		{ title: 'sub1', key: 'sub1' },
-		{ title: 'sub2', key: 'sub2' },
-		{ title: 'sub3', key: 'sub3' },
-		{ title: 'sub4', key: 'sub4' },
-		{ title: 'sub5', key: 'sub5' },
-		{ title: 'sub6', key: 'sub6' },
-		{ title: 'sub7', key: 'sub7' },
-		{ title: 'User Agent', key: 'user_agent' },
-		{ title: 'комментарий', key: 'comment' },
-		{ title: 'id', key: 'id' },
-	]
-
-	const getValue = (obj: any, path: string) => {
-		if (path === 'id') {
-			return parseInt(obj.id)
-		}
-		return path.split('.').reduce((acc, part) => acc && acc[part], obj)
-	}
 
 	return (
 		<Box className={styles.tableBox}>
