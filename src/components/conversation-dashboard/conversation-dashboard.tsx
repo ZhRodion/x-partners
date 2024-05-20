@@ -40,13 +40,14 @@ const theme = createTheme({
 	},
 })
 
-const renderCell = (key: string, value: any) => {
+const renderCell = (key: string, value: any, rowKey: string) => {
+	const cellKey = `${rowKey}_${key}`
 	switch (key) {
 		case 'date':
-			return <TableCell>{formatDate(value)}</TableCell>
+			return <TableCell key={cellKey}>{formatDate(value)}</TableCell>
 		case 'user_agent':
 			return (
-				<TableCell>
+				<TableCell key={cellKey}>
 					<ThemeProvider theme={theme}>
 						<Tooltip title={value} arrow={true} placement='top'>
 							<IconButton>
@@ -57,11 +58,15 @@ const renderCell = (key: string, value: any) => {
 				</TableCell>
 			)
 		case 'income':
-			return <TableCell>{`${value.amount} ${value.currency}`}</TableCell>
+			return (
+				<TableCell
+					key={cellKey}
+				>{`${value.amount} ${value.currency}`}</TableCell>
+			)
 		case 'comment':
-			return <TableCell>{value ? value : '-'}</TableCell>
+			return <TableCell key={cellKey}>{value ? value : '-'}</TableCell>
 		default:
-			return <TableCell>{value}</TableCell>
+			return <TableCell key={cellKey}>{value}</TableCell>
 	}
 }
 
@@ -108,18 +113,25 @@ export default function ConversationDashboard() {
 						</TableRow>
 					</TableHead>
 					<TableBody className={styles.table__body}>
-						{filteredConversions.map((conversion, index) => (
-							<TableRow
-								className={`${styles.table__row} ${
-									index % 2 === 0 ? '' : styles.bgRow
-								}`}
-								key={uuidv4()}
-							>
-								{columns.map(column =>
-									renderCell(column.key, getValue(conversion, column.key))
-								)}
-							</TableRow>
-						))}
+						{filteredConversions.map((conversion, index) => {
+							const rowKey = `${uuidv4()}_${conversion.id}_${conversion.sub2}`
+							return (
+								<TableRow
+									className={`${styles.table__row} ${
+										index % 2 === 0 ? '' : styles.bgRow
+									}`}
+									key={rowKey}
+								>
+									{columns.map(column =>
+										renderCell(
+											column.key,
+											getValue(conversion, column.key),
+											rowKey
+										)
+									)}
+								</TableRow>
+							)
+						})}
 						{filteredConversions.length === 0 && (
 							<TableRow className={styles.noData}>
 								<td className={styles.noData__text}>Ничего не найдено</td>
